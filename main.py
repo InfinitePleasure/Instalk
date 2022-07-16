@@ -30,12 +30,17 @@ def get_medias(user_to_dl):
         path = Path(user_to_dl.username + "/")
         if not path.exists():
             path.mkdir()
-        medias = cl.user_medias(int(cl.user_id_from_username(user_to_dl.username)), user_to_dl.media_count)
-        media_count[user_to_dl.username] = user_to_dl.media_count
-        print(media_count[user_to_dl.username])
+        medias = cl.user_medias(int(user_to_dl.pk))
+        x = 0
         for media in medias:
-            dl(media, path)
-            time.sleep(10)
+            if x <= (len(medias) - media_count[user_to_dl.username]):
+                dl(media, path)
+                time.sleep(5)
+            x = x + 1
+        media_count[user_to_dl.username] = user_to_dl.media_count
+        with open('media_count.yml', 'w') as f:
+            yaml.dump(media_count, f)
+
     elif media_count[user_to_dl.username] > user_to_dl.media_count:
         media_count[user_to_dl.username] = user_to_dl.media_count
         with open('media_count.yml', 'w') as f:
@@ -48,16 +53,24 @@ def get_stories(user_to_dl, client):
         path = Path(user_to_dl.username + "/stories/")
         if not path.exists():
             path.mkdir()
-        story_count[user_to_dl.username] = len(stories)
-        print(media_count[user_to_dl.username])
+        x = 1
         for story in stories:
-            time.sleep(10)
-            try:
-                client.story_download(int(story.pk), Path(user_to_dl.username + "/stories/" + story.pk))
-            except instagrapi.exceptions.UnknownError:
-                print("Story invalide")
-            finally:
-                continue
+            if x > story_count[user_to_dl.username]:
+                try:
+                    client.story_download(int(story.pk), Path(user_to_dl.username + "/stories/" + story.pk))
+                    time.sleep(5)
+                except instagrapi.exceptions.UnknownError:
+                    print(client.story_info(int(story.pk)))
+                    print("Story invalide")
+                finally:
+                    x = x + 1
+                    continue
+            else:
+                x = x + 1
+        story_count[user_to_dl.username] = len(stories)
+        with open('story_count.yml', 'w') as f:
+            yaml.dump(story_count, f)
+
     elif story_count[user_to_dl.username] > len(stories):
         story_count[user_to_dl.username] = len(stories)
         with open('story_count.yml', 'w') as f:
@@ -72,12 +85,12 @@ if __name__ == '__main__':
         media_count = yaml.safe_load(f)
     with open("story_count.yml") as f:
         story_count = yaml.safe_load(f)
-    usernames = ["liste pseudo"]
+    usernames = ["pseudos ici"]
     while True:
         for username in usernames:
-            user_id = cl.user_info_by_username(username)
-            get_medias(user_id)
-            get_stories(user_id, cl)
+            user_id = cl.user_id_from_username(username)
+            get_medias(cl.user_info(user_id))
+            get_stories(cl.user_info(user_id), cl)
         with open('story_count.yml', 'w') as f:
             yaml.dump(story_count, f)
         with open('media_count.yml', 'w') as f:
