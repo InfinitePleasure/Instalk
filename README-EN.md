@@ -7,13 +7,13 @@ python3 -m pip install instagrapi pillow yaml
 ```
 
 ## step 2
-Enter your credentials at the line 69:
+Enter your credentials at the line 85:
 ```
 cl.login("pseudo", "mdp")
 ```
 
 ## step 3:
-And to finish add usernames at line 75:
+And to finish add usernames at line 93:
 ```
 usernames = ["pseudo list"]
 ```
