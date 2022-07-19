@@ -7,7 +7,7 @@ python3 -m pip install instagrapi pillow yaml
 ```
 
 ## étape 2
-Renseigner vos identifiants instagram comme suit a la ligne 83:
+Renseigner vos identifiants instagram comme suit a la ligne 85:
 ```
 cl.login("pseudo", "mdp")
 ```
