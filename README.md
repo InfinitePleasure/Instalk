@@ -22,3 +22,10 @@ donnera:
 usernames = ["ilonaaln", "sheilapereira___"]
 ```
 pour ilonaaln et sheilapereira___
+
+<br>
+<br>
+
+## Important
+Il faut avoir activer l'authentifiaction a deux facteurs (A2F) avec Google Authenticator pour pouvoir utiliser le logicel
+> pour éviter les problème de connection (etc)
