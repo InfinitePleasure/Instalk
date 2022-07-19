@@ -7,13 +7,13 @@ python3 -m pip install instagrapi pillow yaml
 ```
 
 ## étape 2
-Renseigner vos identifiants instagram comme suit a la ligne 69:
+Renseigner vos identifiants instagram comme suit a la ligne 83:
 ```
 cl.login("pseudo", "mdp")
 ```
 
 ## étpae 3
-Et pour finir ajoutez les pseudo des personnes a stalk a la ligne 75 comme suit:
+Et pour finir ajoutez les pseudo des personnes a stalk a la ligne 93 comme suit:
 ```
 usernames = ["liste pseudo"]
 ```
